@@ -1,0 +1,99 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.10'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'jacoco'
+}
+
+group = 'com.gwangcle'
+version = '0.0.1-SNAPSHOT-' + new Date().format("yyyyMMddHHmmss")
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'io.rest-assured:rest-assured:4.5.1'
+}
+
+jacoco {
+	toolVersion = "0.8.8"
+	reportsDirectory = layout.buildDirectory.dir('jacocoDir')
+}
+
+test {
+	finalizedBy 'jacocoTestReport'
+	useJUnitPlatform()
+
+	jacoco {
+
+		excludes += ["com/gwangcle/study/StudyApplication.class",
+					 "com/gwangcle/study/member/service/dto/*"]
+	}
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = true
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it,
+					exclude: ["com/gwangcle/study/StudyApplication.class",
+							  "com/gwangcle/study/member/service/dto/*"])
+		}))
+	}
+
+
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+
+jacocoTestCoverageVerification {
+	violationRules {
+
+		rule {
+			enabled = true
+			// 클래스 단위로 커버리지 체크
+			element = 'CLASS'
+
+			// 라인 커버리지 제한을 80%로 설정
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.80
+			}
+
+			// 브랜치 커버리지 제한을 80%로 설정
+			limit {
+				counter = 'BRANCH'
+				value = 'COVEREDRATIO'
+				minimum = 0.80
+			}
+
+			excludes = [
+					'*.*Application',
+					'*.dto.*'
+			]
+		}
+	}
+}
