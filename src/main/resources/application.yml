@@ -5,3 +5,8 @@ spring:
         show_sql: true
         format_sql: true
         highlight_sql : true
+
+logging:
+  level:
+    org:
+      springframework: INFO
