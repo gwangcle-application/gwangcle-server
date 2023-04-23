@@ -2,7 +2,6 @@ package com.gwangcle.study.acceptance;
 
 import com.gwangcle.study.utils.DatabaseCleanUp;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,9 +18,5 @@ public class AcceptanceSetUp {
     @BeforeEach
     public void setUp() {
         databaseCleanup.execute();
-    }
-
-    @Test
-    public void init() {
     }
 }
