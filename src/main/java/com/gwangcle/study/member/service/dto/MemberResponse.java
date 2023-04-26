@@ -1,8 +1,8 @@
-package com.gwangcle.study.Member.service.dto;
+package com.gwangcle.study.member.service.dto;
 
-import com.gwangcle.study.Member.domain.EmploymentStatus;
-import com.gwangcle.study.Member.domain.Task;
-import com.gwangcle.study.Member.domain.Member;
+import com.gwangcle.study.member.domain.CareerLevel;
+import com.gwangcle.study.member.domain.JobType;
+import com.gwangcle.study.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,19 +14,19 @@ public class MemberResponse {
 
     private Long id;
     private String name;
-    private EmploymentStatus employmentStatus;
-    private Task task;
+    private CareerLevel careerLevel;
+    private JobType jobType;
 
-    public MemberResponse() {
+    protected MemberResponse() {
         //no-op
     }
 
     @Builder
-    public MemberResponse(Long id, String name, EmploymentStatus employmentStatus, Task task) {
+    public MemberResponse(Long id, String name, CareerLevel careerLevel, JobType jobType) {
         this.id = id;
         this.name = name;
-        this.employmentStatus = employmentStatus;
-        this.task = task;
+        this.careerLevel = careerLevel;
+        this.jobType = jobType;
     }
 
     public static List<MemberResponse> of(List<Member> members) {
@@ -40,8 +40,8 @@ public class MemberResponse {
         return MemberResponse.builder()
                 .id(member.getId())
                 .name(member.getName())
-                .employmentStatus(member.getEmploymentStatus())
-                .task(member.getTask())
+                .jobType(member.getJobType())
+                .careerLevel(member.getCareerLevel())
                 .build();
     }
 }

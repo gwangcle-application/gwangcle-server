@@ -1,4 +1,4 @@
-package com.gwangcle.study.Member.domain;
+package com.gwangcle.study.member.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -13,19 +13,19 @@ public class Member {
     private Long id;
     private String name;
     @Enumerated(value = EnumType.STRING)
-    private EmploymentStatus employmentStatus;
+    private CareerLevel careerLevel;
     @Enumerated(value = EnumType.STRING)
-    private Task task;
+    private JobType jobType;
 
     protected Member() {
         // no-op
     }
 
     @Builder
-    public Member(Long id, String name, EmploymentStatus employmentStatus, Task task) {
+    public Member(Long id, String name, CareerLevel careerLevel, JobType jobType) {
         this.id = id;
         this.name = name;
-        this.employmentStatus = employmentStatus;
-        this.task = task;
+        this.careerLevel = careerLevel;
+        this.jobType = jobType;
     }
 }
