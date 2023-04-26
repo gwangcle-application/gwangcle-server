@@ -1,4 +1,4 @@
-package com.gwangcle.study.Member.domain;
+package com.gwangcle.study.member.domain;
 
 import java.util.List;
 import java.util.Optional;

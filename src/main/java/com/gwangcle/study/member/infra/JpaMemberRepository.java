@@ -1,7 +1,7 @@
-package com.gwangcle.study.Member.infra;
+package com.gwangcle.study.member.infra;
 
-import com.gwangcle.study.Member.domain.Member;
-import com.gwangcle.study.Member.domain.MemberRepository;
+import com.gwangcle.study.member.domain.Member;
+import com.gwangcle.study.member.domain.MemberRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

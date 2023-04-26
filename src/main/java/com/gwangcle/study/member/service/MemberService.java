@@ -1,9 +1,9 @@
-package com.gwangcle.study.Member.service;
+package com.gwangcle.study.member.service;
 
-import com.gwangcle.study.Member.domain.Member;
-import com.gwangcle.study.Member.domain.MemberRepository;
-import com.gwangcle.study.Member.service.dto.MemberRequest;
-import com.gwangcle.study.Member.service.dto.MemberResponse;
+import com.gwangcle.study.member.domain.Member;
+import com.gwangcle.study.member.domain.MemberRepository;
+import com.gwangcle.study.member.service.dto.MemberRequest;
+import com.gwangcle.study.member.service.dto.MemberResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +28,10 @@ public class MemberService {
 
     @Transactional
     public MemberResponse save(MemberRequest memberRequest) {
-        System.out.println(memberRequest.getTask());
         Member member = memberRepository.save(Member.builder()
                 .name(memberRequest.getName())
-                .employmentStatus(memberRequest.getEmploymentStatus())
-                .task(memberRequest.getTask())
+                .careerLevel(memberRequest.getCareerLevel())
+                .jobType(memberRequest.getJobType())
                 .build()
         );
         return MemberResponse.of(member);
@@ -43,8 +42,8 @@ public class MemberService {
         return MemberResponse.of(Member.builder()
                 .id(member.getId())
                 .name(member.getName())
-                .employmentStatus(member.getEmploymentStatus())
-                .task(member.getTask())
+                .careerLevel(member.getCareerLevel())
+                .jobType(member.getJobType())
                 .build());
     }
 

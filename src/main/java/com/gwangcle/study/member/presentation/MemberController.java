@@ -1,8 +1,8 @@
-package com.gwangcle.study.Member.presentation;
+package com.gwangcle.study.member.presentation;
 
-import com.gwangcle.study.Member.service.MemberService;
-import com.gwangcle.study.Member.service.dto.MemberRequest;
-import com.gwangcle.study.Member.service.dto.MemberResponse;
+import com.gwangcle.study.member.service.MemberService;
+import com.gwangcle.study.member.service.dto.MemberRequest;
+import com.gwangcle.study.member.service.dto.MemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
