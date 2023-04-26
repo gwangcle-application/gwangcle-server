@@ -1,0 +1,39 @@
+== Member API
+
+
+=== 회원 모델링
+operation::member-acceptance-test/save[snippets='response-fields']
+
+==== jobType 조건
+
+- `backend` (백엔드)
+- `frontend` (프론트엔드)
+- `mobile` (모바일)
+- `date-scientist` (데이터 분석가)
+- `product-manager` (기획자)
+- `publisher` (퍼블리셔)
+- `etc` (기타)
+
+==== careerLevel 조건
+
+- `none` (경력 없음)
+- `junior` (0~2년차)
+- `middle` (3~6년차)
+- `senior` (7년차 이상)
+
+
+=== 회원 추가
+operation::member-acceptance-test/save[snippets='http-request']
+operation::member-acceptance-test/save[snippets='http-response']
+
+=== 회원 검색
+operation::member-acceptance-test/find-by-id[snippets='http-request']
+operation::member-acceptance-test/find-by-id[snippets='http-response']
+
+=== 전체 회원 검색
+operation::member-acceptance-test/find-all[snippets='http-request']
+operation::member-acceptance-test/find-all[snippets='http-response']
+
+=== 회원 삭제
+operation::member-acceptance-test/delete-by-id[snippets='http-request']
+operation::member-acceptance-test/delete-by-id[snippets='http-response']

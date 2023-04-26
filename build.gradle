@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.10'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "org.asciidoctor.jvm.convert" version "3.3.2"
 	id 'jacoco'
 }
 
@@ -10,6 +11,7 @@ version = '0.0.1-SNAPSHOT-' + new Date().format("yyyyMMddHHmmss")
 sourceCompatibility = '11'
 
 configurations {
+	asciidoctorExtensions
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
@@ -20,32 +22,74 @@ repositories {
 }
 
 dependencies {
+	//spring
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	//lombok
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	//database
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
+
+	//restdocs
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:2.0.5.RELEASE'
+
+	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'io.rest-assured:rest-assured:4.5.1'
 }
 
-jacoco {
-	toolVersion = "0.8.8"
-	reportsDirectory = layout.buildDirectory.dir('jacocoDir')
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
 }
 
 test {
+	outputs.dir snippetsDir
 	finalizedBy 'jacocoTestReport'
 	useJUnitPlatform()
 
 	jacoco {
-
 		excludes += ["com/gwangcle/study/StudyApplication.class",
 					 "com/gwangcle/study/member/service/dto/*"]
 	}
+}
+
+asciidoctor {
+	configurations 'asciidoctorExtensions'
+	inputs.dir snippetsDir
+	sources {
+		include("**/index.adoc")
+	}
+	baseDirFollowsSourceFile()
+	dependsOn test
+}
+
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+	from file("${asciidoctor.outputDir}")
+	into file("build/resources/main/static")
+}
+
+bootJar {
+	dependsOn asciidoctor
+	from ("${asciidoctor.outputDir}/html5") {
+		into 'static/docs'
+	}
+}
+
+bootJar {
+	dependsOn copyDocument
+}
+
+jacoco {
+	toolVersion = "0.8.8"
+	reportsDirectory = layout.buildDirectory.dir('jacocoDir')
 }
 
 jacocoTestReport {
@@ -66,7 +110,6 @@ jacocoTestReport {
 
 	finalizedBy 'jacocoTestCoverageVerification'
 }
-
 
 jacocoTestCoverageVerification {
 	violationRules {

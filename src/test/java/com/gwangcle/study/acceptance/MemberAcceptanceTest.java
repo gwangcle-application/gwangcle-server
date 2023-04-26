@@ -18,12 +18,12 @@ public class MemberAcceptanceTest extends AcceptanceSetUp {
     @Test
     public void save() {
         //when
-        ExtractableResponse<Response> response = MemberSteps.회원_생성_요청(MemberFixtures.NAME_ONE, MemberFixtures.EMPLOYMENT_STATUS_ONE, MemberFixtures.TASK_ONE);
+        ExtractableResponse<Response> response = MemberSteps.회원_생성_요청(spec, MemberFixtures.NAME_ONE, MemberFixtures.CAREER_LEVEL_ONE, MemberFixtures.JOB_TYPE_ONE);
 
         //then
         Assertions.assertThat(response.jsonPath().getString("name")).isEqualTo(MemberFixtures.NAME_ONE);
-        Assertions.assertThat(response.jsonPath().getString("employmentStatus")).isEqualTo(MemberFixtures.EMPLOYMENT_STATUS_ONE);
-        Assertions.assertThat(response.jsonPath().getString("task")).isEqualTo(MemberFixtures.TASK_ONE);
+        Assertions.assertThat(response.jsonPath().getString("careerLevel")).isEqualTo(MemberFixtures.CAREER_LEVEL_ONE);
+        Assertions.assertThat(response.jsonPath().getString("jobType")).isEqualTo(MemberFixtures.JOB_TYPE_ONE);
     }
 
     /**
@@ -34,15 +34,15 @@ public class MemberAcceptanceTest extends AcceptanceSetUp {
     @Test
     public void findById() {
         //given
-        ExtractableResponse<Response> createResponse = MemberSteps.회원_생성_요청(MemberFixtures.NAME_ONE, MemberFixtures.EMPLOYMENT_STATUS_ONE, MemberFixtures.TASK_ONE);
+        ExtractableResponse<Response> createResponse = MemberSteps.회원_생성_요청(spec, MemberFixtures.NAME_ONE, MemberFixtures.CAREER_LEVEL_ONE, MemberFixtures.JOB_TYPE_ONE);
 
         //when
-        ExtractableResponse<Response> readResponse = MemberSteps.PK_값으로_회원_정보_요청(createResponse);
+        ExtractableResponse<Response> readResponse = MemberSteps.PK_값으로_회원_정보_요청(spec, createResponse);
 
         //then
         Assertions.assertThat(readResponse.jsonPath().getString("name")).isEqualTo(MemberFixtures.NAME_ONE);
-        Assertions.assertThat(readResponse.jsonPath().getString("employmentStatus")).isEqualTo(MemberFixtures.EMPLOYMENT_STATUS_ONE);
-        Assertions.assertThat(readResponse.jsonPath().getString("task")).isEqualTo(MemberFixtures.TASK_ONE);
+        Assertions.assertThat(readResponse.jsonPath().getString("careerLevel")).isEqualTo(MemberFixtures.CAREER_LEVEL_ONE);
+        Assertions.assertThat(readResponse.jsonPath().getString("jobType")).isEqualTo(MemberFixtures.JOB_TYPE_ONE);
     }
 
     /**
@@ -53,11 +53,11 @@ public class MemberAcceptanceTest extends AcceptanceSetUp {
     @Test
     public void findAll() {
         //given
-        MemberSteps.회원_생성_요청(MemberFixtures.NAME_ONE, MemberFixtures.EMPLOYMENT_STATUS_ONE, MemberFixtures.TASK_ONE);
-        MemberSteps.회원_생성_요청(MemberFixtures.NAME_TWO, MemberFixtures.EMPLOYMENT_STATUS_TWO, MemberFixtures.TASK_TWO);
+        MemberSteps.회원_생성_요청(spec, MemberFixtures.NAME_ONE, MemberFixtures.CAREER_LEVEL_ONE, MemberFixtures.JOB_TYPE_ONE);
+        MemberSteps.회원_생성_요청(spec, MemberFixtures.NAME_TWO, MemberFixtures.CAREER_LEVEL_TWO, MemberFixtures.JOB_TYPE_TWO);
 
         //when
-        ExtractableResponse<Response> response = MemberSteps.회원_정보_전체_요청();
+        ExtractableResponse<Response> response = MemberSteps.회원_정보_전체_요청(spec);
 
         //then
         Assertions.assertThat(response.jsonPath().getList("id").size()).isEqualTo(2);
@@ -71,9 +71,9 @@ public class MemberAcceptanceTest extends AcceptanceSetUp {
     @Test
     public void deleteById() {
         //given
-        ExtractableResponse<Response> createResponse = MemberSteps.회원_생성_요청(MemberFixtures.NAME_ONE, MemberFixtures.EMPLOYMENT_STATUS_ONE, MemberFixtures.TASK_ONE);
+        ExtractableResponse<Response> createResponse = MemberSteps.회원_생성_요청(spec, MemberFixtures.NAME_ONE, MemberFixtures.CAREER_LEVEL_ONE, MemberFixtures.JOB_TYPE_ONE);
 
         //when+then
-        MemberSteps.PK_값으로_회원_삭제_요청(createResponse);
+        MemberSteps.PK_값으로_회원_삭제_요청(spec, createResponse);
     }
 }
